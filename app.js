@@ -1,9 +1,13 @@
 const express = require('express');
+const cors = require('cors')
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
-const words = ['axa'];
+const words = ['gamble', 'blade', 'pepper', 'perfect',
+               'inspire', 'bargain', 'atmosphere',
+               'requirement', 'circumstance', 'chief'];
 
 const playersMatchInfo = [
 ];
@@ -37,7 +41,7 @@ app.put('/api/guess/:id', (req, res) => {
     const index = playersMatchInfo.findIndex(p => p.player.id === parseInt(req.params.id));
     const letter = req.body.letter;
 
-    if(playerInfo.player.hp <= 0) {
+    if(playerInfo.player.hp <= 0 || letter === '') {
         res.send(playerInfo);
         return;
     }
