@@ -23,7 +23,6 @@ app.post('/api/players', (req, res) => {
     const word = words[Math.floor(Math.random() * words.length)];
 
     const playerInfo = {
-        id: playersMatchInfo.length + 1,
         player: player,
         word: word,
         guessed: '_'.repeat(word.length)
@@ -54,6 +53,18 @@ app.put('/api/guess/:id', (req, res) => {
         playerInfo.player.hp -= 1;
     }
 
+    playersMatchInfo[index] = playerInfo;
+    res.send(playerInfo);
+})
+
+app.put('/api/restart/:id', (req, res) => {
+    const playerInfo = playersMatchInfo.find(p => p.player.id === parseInt(req.params.id));
+    const index = playersMatchInfo.findIndex(p => p.player.id === parseInt(req.params.id));
+
+    playerInfo.player.hp = 10;
+    playerInfo.word = words[Math.floor(Math.random() * words.length)];
+    playerInfo.guessed = '_'.repeat(playerInfo.word.length);
+    
     playersMatchInfo[index] = playerInfo;
     res.send(playerInfo);
 })
