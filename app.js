@@ -33,4 +33,34 @@ app.post('/api/players', (req, res) => {
     res.send(playerInfo);
 })
 
+app.put('/api/guess/:id', (req, res) => {
+    const playerInfo = playersMatchInfo.find(p => p.player.id === parseInt(req.params.id));
+    const index = playersMatchInfo.findIndex(p => p.player.id === parseInt(req.params.id));
+    const letter = req.body.letter;
+
+    if(playerInfo.player.hp <= 0) {
+        res.send(playerInfo);
+        return;
+    }
+
+    if(playerInfo.word.indexOf(letter) !== -1) {
+        for(var i=0; i < playerInfo.word.length; i++) {
+            if(playerInfo.word[i] === letter) {
+                playerInfo.guessed = setCharAt(playerInfo.guessed, i, letter)
+            }
+        }
+    }
+    else {
+        playerInfo.player.hp -= 1;
+    }
+
+    playersMatchInfo[index] = playerInfo;
+    res.send(playerInfo);
+})
+
+function setCharAt(str,index,chr) {
+    if(index > str.length-1) return str;
+    return str.substring(0,index) + chr + str.substring(index+1);
+}
+
 app.listen(3000, () => console.log('Server started on port 3000'));
