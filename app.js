@@ -7,7 +7,7 @@ app.use(cors());
 
 const words = ['gamble', 'blade', 'pepper', 'perfect',
                'inspire', 'bargain', 'atmosphere',
-               'requirement', 'circumstance', 'chief'];
+               'require', 'polite', 'chief'];
 
 const playersMatchInfo = [
 ];
@@ -52,6 +52,11 @@ app.put('/api/guess/:id', (req, res) => {
         return;
     }
 
+    if(playerInfo.guessed.indexOf(letter) === -1 && 
+       playerInfo.wrongLetters.indexOf(letter) === -1) {
+        playerInfo.player.hp -= 1;
+    }
+
     if(playerInfo.word.indexOf(letter) !== -1) {
         for(var i=0; i < playerInfo.word.length; i++) {
             if(playerInfo.word[i] === letter) {
@@ -60,8 +65,8 @@ app.put('/api/guess/:id', (req, res) => {
         }
     }
     else {
-        playerInfo.wrongLetters = playerInfo.wrongLetters += letter;
-        playerInfo.player.hp -= 1;
+        playerInfo.wrongLetters = playerInfo.wrongLetters + letter;
+        
     }
 
     playersMatchInfo[index] = playerInfo;

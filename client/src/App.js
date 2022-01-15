@@ -46,9 +46,9 @@ function App() {
   const [name, setName] = useState('');
   const [letter, setLetter] = useState('');
   const [nameSubmited, setNameSubmited] = useState(false);
-  const keyboardKeys = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
-                                         'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
-                                         'z', 'x', 'c', 'v', 'b', 'n', 'm'];
+  const firstKeyboardRow = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
+  const secondKeyboardRow = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'];
+  const thirdKeyboardRow = ['z', 'x', 'c', 'v', 'b', 'n', 'm'];
 
   const handleStartGame = async e => {
     setNameSubmited(true);
@@ -95,7 +95,9 @@ function App() {
           Guesses left: <b>{userInfo.player.hp}</b><br/>
           Word: {showWordToBeGuessed(userInfo.guessed)}<br/>
           <input type="text" value={letter} onChange={e => setLetter(e.target.value)} maxLength="1" className="form-control" placeholder="Letter" /><br/>
-          {keyboardKeys.map(l => displayKeyboardKey(l, userInfo, setUserInfo))}<br/>
+          <div className="d-flex justify-content-center">{firstKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo))}</div>
+          <div className="d-flex justify-content-center">{secondKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo))}</div>
+          <div className="d-flex justify-content-center">{thirdKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo))}</div>
           <Button onClick={handleGuess}>Guess</Button>
          </div>
         }
