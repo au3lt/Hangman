@@ -23,12 +23,13 @@ function showWordToBeGuessed(word) {
   return (<div>{wordToDisplay}</div>)
 }
 
-function displayKeyboardKey(letter, userInfo, setUserInfo) {
+function displayKeyboardKey(letter, userInfo, setUserInfo, setLetter) {
   const handleKeyboardKeyClick = async e => {
     const data = await makeAPIRequest('guess/' + userInfo.player.id, 'PUT', {
       letter
     });
     setUserInfo(data);
+    setLetter('');
   }
 
   if(userInfo.wrongLetters.indexOf(letter) !== -1) {
@@ -94,11 +95,17 @@ function App() {
         <div>
           Guesses left: <b>{userInfo.player.hp}</b><br/>
           Word: {showWordToBeGuessed(userInfo.guessed)}<br/>
-          <input type="text" value={letter} onChange={e => setLetter(e.target.value)} maxLength="1" className="form-control" placeholder="Letter" /><br/>
-          <div className="d-flex justify-content-center">{firstKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo))}</div>
-          <div className="d-flex justify-content-center">{secondKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo))}</div>
-          <div className="d-flex justify-content-center">{thirdKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo))}</div>
-          <Button onClick={handleGuess}>Guess</Button>
+          <form class="form-inline">
+            <div class="form-group mb-2">
+                <input type="text" value={letter} onChange={e => setLetter(e.target.value)} maxLength="1" className="form-control" placeholder="Letter" />
+            </div>
+            <div class="form-group mb-2">
+                <Button onClick={handleGuess}>Guess</Button>
+            </div>
+          </form>
+          <div className="d-flex justify-content-center">{firstKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo, setLetter))}</div>
+          <div className="d-flex justify-content-center">{secondKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo, setLetter))}</div>
+          <div className="d-flex justify-content-center">{thirdKeyboardRow.map(l => displayKeyboardKey(l, userInfo, setUserInfo, setLetter))}</div>
          </div>
         }
       </div>

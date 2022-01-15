@@ -36,7 +36,8 @@ describe('Register new player', () => {
                 hp: 10
             },
             word: 'testing',
-            guessed: '_______'
+            guessed: '_______',
+            wrongLetters: ''
         }
         app.arr.find = jest.fn(() => playerInfo);
         app.arr.findIndex = jest.fn(() => 100);
@@ -55,7 +56,8 @@ describe('Register new player', () => {
                 hp: 10
             },
             word: 'testing',
-            guessed: '_______'
+            guessed: '_______',
+            wrongLetters: ''
         }
         app.arr.find = jest.fn(() => playerInfo);
         app.arr.findIndex = jest.fn(() => 100);
@@ -67,7 +69,7 @@ describe('Register new player', () => {
         expect(res.statusCode).toEqual(200)
         expect(res.body.player.name).toEqual('test')
         expect(res.body.player.id).toEqual(100)
-        expect(res.body.player.hp).toEqual(10)
+        expect(res.body.player.hp).toEqual(9)
         expect(res.body.word).toEqual('testing')
         expect(res.body.guessed).toEqual('_e_____')
     })
@@ -79,7 +81,8 @@ describe('Register new player', () => {
                 hp: 10
             },
             word: 'testing',
-            guessed: '_______'
+            guessed: '_______',
+            wrongLetters: ''
         }
         app.arr.find = jest.fn(() => playerInfo);
         app.arr.findIndex = jest.fn(() => 100);
@@ -115,7 +118,8 @@ describe('Register new player', () => {
                 hp: 5
             },
             word: 'testing',
-            guessed: '_______'
+            guessed: '_______',
+            wrongLetters: ''
         }
         app.arr.find = jest.fn(() => playerInfo);
         app.arr.findIndex = jest.fn(() => 100);
