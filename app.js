@@ -41,8 +41,13 @@ app.put('/api/guess/:id', (req, res) => {
     const index = playersMatchInfo.findIndex(p => p.player.id === parseInt(req.params.id));
     const letter = req.body.letter;
 
+    if(playerInfo == null || index == -1) {
+        res.status(404).send("Not found");
+        return;
+    }
+
     if(playerInfo.player.hp <= 0 || letter === '') {
-        res.send(playerInfo);
+        res.status(400).send(playerInfo);
         return;
     }
 
@@ -65,6 +70,11 @@ app.put('/api/restart/:id', (req, res) => {
     const playerInfo = playersMatchInfo.find(p => p.player.id === parseInt(req.params.id));
     const index = playersMatchInfo.findIndex(p => p.player.id === parseInt(req.params.id));
 
+    if(playerInfo == null || index == null) {
+        res.status(404).send("Not found");
+        return;
+    }
+
     playerInfo.player.hp = 10;
     playerInfo.word = words[Math.floor(Math.random() * words.length)];
     playerInfo.guessed = '_'.repeat(playerInfo.word.length);
@@ -79,3 +89,4 @@ function setCharAt(str,index,chr) {
 }
 
 module.exports = app.listen(9000, () => console.log('Server started on port 9000'));
+module.exports.arr = playersMatchInfo;
