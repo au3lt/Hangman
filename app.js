@@ -29,7 +29,8 @@ app.post('/api/players', (req, res) => {
     const playerInfo = {
         player: player,
         word: word,
-        guessed: '_'.repeat(word.length)
+        guessed: '_'.repeat(word.length),
+        wrongLetters: ''
     }
 
     playersMatchInfo.push(playerInfo);
@@ -59,6 +60,7 @@ app.put('/api/guess/:id', (req, res) => {
         }
     }
     else {
+        playerInfo.wrongLetters = playerInfo.wrongLetters += letter;
         playerInfo.player.hp -= 1;
     }
 
@@ -78,6 +80,7 @@ app.put('/api/restart/:id', (req, res) => {
     playerInfo.player.hp = 10;
     playerInfo.word = words[Math.floor(Math.random() * words.length)];
     playerInfo.guessed = '_'.repeat(playerInfo.word.length);
+    playerInfo.wrongLetters = '';
     
     playersMatchInfo[index] = playerInfo;
     res.send(playerInfo);

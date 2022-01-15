@@ -23,11 +23,26 @@ function showWordToBeGuessed(word) {
   return (<div>{wordToDisplay}</div>)
 }
 
+function displayKeyboardKey(letter, setLetter, usedWrongLetters) {
+  const handleKeyboardKeyClick = () => {
+    setLetter(letter)
+  }
+
+  if(usedWrongLetters.indexOf(letter) !== -1) {
+    return <button onClick={handleKeyboardKeyClick} class="p-0 mb-2 mx-1 bg-danger text-white text-center rounded" style={{width: '30px', height: '30px', display: 'inline-block'}}>{letter}</button>
+  }
+
+  return <button onClick={handleKeyboardKeyClick} class="p-0 mb-2 mx-1 bg-light text-dark text-center rounded" style={{width: '30px', height: '30px', display: 'inline-block'}}>{letter}</button>
+}
+
 function App() {
   const [userInfo, setUserInfo] = useState(null);
   const [name, setName] = useState('');
   const [letter, setLetter] = useState('');
   const [nameSubmited, setNameSubmited] = useState(false);
+  const [keyboardKeys, setKeyboardKeys] = useState(['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+  'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+  'z', 'x', 'c', 'v', 'b', 'n', 'm']);
 
   const handleStartGame = async e => {
     setNameSubmited(true);
@@ -53,7 +68,7 @@ function App() {
 
   return(
     <div style={{display: "flex", flexDirection: "column", minHeight: "100vh", background: '#E8E8E8'}}>
-      <div className="container-sm mt-1 border rounded" style={{padding: '7px', marginBottom: "50px", background: 'white', maxWidth: '300px'}}>
+      <div className="container-sm mt-1 border rounded" style={{padding: '7px', marginBottom: "50px", background: 'white', maxWidth: '400px'}}>
         <Heading text='Hangman' />
         {userInfo == null ? 
         <div>
@@ -74,6 +89,7 @@ function App() {
           Guesses left: <b>{userInfo.player.hp}</b><br/>
           Word: {showWordToBeGuessed(userInfo.guessed)}<br/>
           <input type="text" value={letter} onChange={e => setLetter(e.target.value)} maxLength="1" className="form-control" placeholder="Letter" /><br/>
+          {keyboardKeys.map(l => displayKeyboardKey(l, setLetter, userInfo.wrongLetters))}<br/>
           <Button onClick={handleGuess}>Guess</Button>
          </div>
         }
