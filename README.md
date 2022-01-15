@@ -1,7 +1,8 @@
 ## Introduction
 
-This is traditional hangman game implemented with Node.js and React.js. When starting the game, you have 10 guesses. Program randomly picks up word to guess from existing list of words. Each wrong letter guess costs you 1 hitpoint. When reach 0 - you are eliminated and can start over.
+This is traditional hangman game implemented with Node.js and React.js. When starting the game, you have 10 guesses. Program randomly picks up word to guess from existing list of words. Each letter guess costs you 1 hitpoint. When you reach 0 - you are eliminated and can start over.
 If you want to add new words, simply go to Hangman directory to app.js and add more string elements to "words" array.
+You can guess letters in word by either typing letter in an input field and pressing "Guess" or pressing letter's keys in virtual keyboard.
 
 ## How to launch
 
